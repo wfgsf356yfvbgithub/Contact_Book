@@ -5,7 +5,6 @@ import os
 
 
 # DECORATOR FOR ERROR HANDLING
-
 def safe_run(func):
     def wrapper(*args, **kwargs):
         try:
@@ -17,7 +16,6 @@ def safe_run(func):
 
 
 # CONTACT CLASS (OOP)
-
 class Contact:
     def __init__(self, name, phone, email=""):
         self.name = name
@@ -30,15 +28,13 @@ class Contact:
 
 
 # CONTACT BOOK MANAGER (OOP)
-
 class ContactBook:
     def __init__(self, json_file="contacts.json"):
         self.json_file = json_file
         self.contacts = self.load_contacts()
 
-
+    
     # Load contacts from JSON
-   
     @safe_run
     def load_contacts(self):
         if os.path.exists(self.json_file):
@@ -48,24 +44,21 @@ class ContactBook:
 
    
     # Save contacts to JSON
-    
     @safe_run
     def save_contacts(self):
         with open(self.json_file, "w") as file:
             json.dump(self.contacts, file, indent=4)
 
-   
-    # Add contact
     
+    # Add contact
     @safe_run
     def add_contact(self, contact: Contact):
         self.contacts.append(contact.to_dict())
         self.save_contacts()
         print("\nContact Added Successfully")
 
-  
+   
     # Update contact
-    
     @safe_run
     def update_contact(self, name):
         for c in self.contacts:
@@ -82,9 +75,8 @@ class ContactBook:
 
         print("Contact Not Found")
 
-   
+    
     # Delete contact
-  
     @safe_run
     def delete_contact(self, name):
         for c in self.contacts:
@@ -96,12 +88,11 @@ class ContactBook:
 
         print("Contact Not Found")
 
-    
+
     # Search contact
-    
     @safe_run
     def search_contact(self, name):
-        # Nested Function Example
+    
         def match(c):
             return c["name"].lower() == name.lower()
 
@@ -117,7 +108,6 @@ class ContactBook:
 
     
     # Export contacts to CSV
-   
     @safe_run
     def export_to_csv(self, csv_file="contacts.csv"):
         with open(csv_file, "w", newline="") as file:
@@ -129,7 +119,6 @@ class ContactBook:
 
 
 # MENU DRIVEN PROGRAM
-
 def main():
     book = ContactBook()
 
