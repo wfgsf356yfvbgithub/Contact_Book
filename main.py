@@ -3,9 +3,9 @@ import csv
 import os
 
 
-# ------------------------------
+
 # DECORATOR FOR ERROR HANDLING
-# ------------------------------
+
 def safe_run(func):
     def wrapper(*args, **kwargs):
         try:
@@ -15,9 +15,9 @@ def safe_run(func):
     return wrapper
 
 
-# ------------------------------
+
 # CONTACT CLASS (OOP)
-# ------------------------------
+
 class Contact:
     def __init__(self, name, phone, email=""):
         self.name = name
@@ -28,17 +28,17 @@ class Contact:
         return {"name": self.name, "phone": self.phone, "email": self.email}
 
 
-# ------------------------------
+
 # CONTACT BOOK MANAGER (OOP)
-# ------------------------------
+
 class ContactBook:
     def __init__(self, json_file="contacts.json"):
         self.json_file = json_file
         self.contacts = self.load_contacts()
 
-    # --------------------------
+
     # Load contacts from JSON
-    # --------------------------
+   
     @safe_run
     def load_contacts(self):
         if os.path.exists(self.json_file):
@@ -46,26 +46,26 @@ class ContactBook:
                 return json.load(file)
         return []
 
-    # --------------------------
+   
     # Save contacts to JSON
-    # --------------------------
+    
     @safe_run
     def save_contacts(self):
         with open(self.json_file, "w") as file:
             json.dump(self.contacts, file, indent=4)
 
-    # --------------------------
+   
     # Add contact
-    # --------------------------
+    
     @safe_run
     def add_contact(self, contact: Contact):
         self.contacts.append(contact.to_dict())
         self.save_contacts()
-        print("\n✔ Contact Added Successfully")
+        print("\nContact Added Successfully")
 
-    # --------------------------
+  
     # Update contact
-    # --------------------------
+    
     @safe_run
     def update_contact(self, name):
         for c in self.contacts:
@@ -77,28 +77,28 @@ class ContactBook:
                 c["phone"] = new_phone
                 c["email"] = new_email
                 self.save_contacts()
-                print("\n✔ Contact Updated Successfully")
+                print("\nContact Updated Successfully")
                 return
 
-        print("❌ Contact Not Found")
+        print("Contact Not Found")
 
-    # --------------------------
+   
     # Delete contact
-    # --------------------------
+  
     @safe_run
     def delete_contact(self, name):
         for c in self.contacts:
             if c["name"].lower() == name.lower():
                 self.contacts.remove(c)
                 self.save_contacts()
-                print("\n✔ Contact Deleted Successfully")
+                print("\nContact Deleted Successfully")
                 return
 
-        print("❌ Contact Not Found")
+        print("Contact Not Found")
 
-    # --------------------------
+    
     # Search contact
-    # --------------------------
+    
     @safe_run
     def search_contact(self, name):
         # Nested Function Example
@@ -113,23 +113,23 @@ class ContactBook:
                 print(f"Email: {c['email']}")
                 return
 
-        print("❌ Contact Not Found")
+        print("Contact Not Found")
 
-    # --------------------------
+    
     # Export contacts to CSV
-    # --------------------------
+   
     @safe_run
     def export_to_csv(self, csv_file="contacts.csv"):
         with open(csv_file, "w", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["name", "phone", "email"])
             writer.writeheader()
             writer.writerows(self.contacts)
-        print("\n✔ Contacts Exported to CSV")
+        print("\nContacts Exported to CSV")
 
 
-# ------------------------------
+
 # MENU DRIVEN PROGRAM
-# ------------------------------
+
 def main():
     book = ContactBook()
 
@@ -170,7 +170,7 @@ def main():
             break
 
         else:
-            print("❌ Invalid Choice, try again!")
+            print("Invalid Choice, try again!")
 
 
 if __name__ == "__main__":
